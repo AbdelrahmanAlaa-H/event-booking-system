@@ -8,8 +8,8 @@ export const createEvent = async (
   req: AuthenticatedRequest,
   res: Response,
   next: NextFunction
-): Promise<void> => {
-  const { title, description, date, location } = req.body;
+) => {
+  const { title, description, date, location, category, tags } = req.body;
 
   try {
     const newEvent = new Event({
@@ -17,7 +17,9 @@ export const createEvent = async (
       description,
       date,
       location,
-      createdBy: req.user?.id, // نستخدم الـ id من التوكن
+      category, // ID للفئة
+      tags, // Array of tag IDs
+      createdBy: req.user?.id,
     });
 
     await newEvent.save();

@@ -1,11 +1,14 @@
+// models/Event.ts
 import mongoose, { Schema, Document } from "mongoose";
 
-interface Event extends Document {
+export interface Event extends Document {
   title: string;
   description: string;
   date: Date;
   location: string;
   createdBy: mongoose.Schema.Types.ObjectId;
+  category: mongoose.Schema.Types.ObjectId;
+  tags: mongoose.Schema.Types.ObjectId[];
 }
 
 const eventSchema: Schema = new Schema(
@@ -18,10 +21,20 @@ const eventSchema: Schema = new Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true,
-    }, // ربط المستخدم الذي أنشأ الحدث
+    },
+    category: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Category",
+    },
+    tags: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Tag",
+      },
+    ],
   },
   {
-    timestamps: true, // إضافة تاريخ الإنشاء والتحديث تلقائيًا
+    timestamps: true,
   }
 );
 
