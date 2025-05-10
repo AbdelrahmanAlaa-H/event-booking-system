@@ -5,10 +5,10 @@ import authMiddleware from "../middlewares/authMiddleware";
 
 const router = express.Router();
 
-// حجز حدث
+//Booking an event
 router.post("/:eventId", authMiddleware, bookEvent);
 
-// عرض الحجوزات الخاصة بالمستخدم
+// Get my bookings
 router.get("/me", authMiddleware, getMyBookings);
 
 export default router;

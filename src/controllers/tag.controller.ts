@@ -22,7 +22,6 @@ export const createTag = async (
   }
 };
 
-// عرض كل الوسوم
 export const getAllTags = async (
   req: Request,
   res: Response,
@@ -36,7 +35,6 @@ export const getAllTags = async (
   }
 };
 
-// حذف وسم
 export const deleteTag = async (
   req: Request,
   res: Response,

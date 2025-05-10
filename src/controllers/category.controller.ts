@@ -1,7 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import Category from "../models/Category";
 
-// إنشاء تصنيف
 export const createCategory = async (
   req: Request,
   res: Response,
@@ -24,7 +23,6 @@ export const createCategory = async (
   }
 };
 
-// عرض كل التصنيفات
 export const getAllCategories = async (
   req: Request,
   res: Response,
@@ -38,7 +36,6 @@ export const getAllCategories = async (
   }
 };
 
-// حذف تصنيف
 export const deleteCategory = async (
   req: Request,
   res: Response,

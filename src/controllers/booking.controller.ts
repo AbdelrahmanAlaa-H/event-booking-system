@@ -4,7 +4,6 @@ import Booking from "../models/Booking";
 import Event from "../models/Event";
 import { AuthenticatedRequest } from "../middlewares/authMiddleware";
 
-// حجز حدث
 export const bookEvent = async (
   req: AuthenticatedRequest,
   res: Response,
@@ -14,14 +13,12 @@ export const bookEvent = async (
   const userId = req.user?.id;
 
   try {
-    // تأكد أن الحدث موجود
     const event = await Event.findById(eventId);
     if (!event) {
       res.status(404).json({ message: "Event not found" });
       return;
     }
 
-    // حاول إنشاء الحجز (سيمنع التكرار بسبب unique index)
     const booking = await Booking.create({ user: userId, event: eventId });
 
     res.status(201).json({ message: "Event booked successfully", booking });
@@ -34,7 +31,6 @@ export const bookEvent = async (
   }
 };
 
-// عرض حجوزات المستخدم الحالي
 export const getMyBookings = async (
   req: AuthenticatedRequest,
   res: Response,

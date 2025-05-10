@@ -7,23 +7,29 @@ import {
   deleteEvent,
 } from "../controllers/event.controller";
 import authMiddleware from "../middlewares/authMiddleware";
-import adminMiddleware from "../middlewares/adminMiddleware"; // استيراد adminMiddleware
+import adminMiddleware from "../middlewares/adminMiddleware";
+import { upload } from "../utils/cloudinary";
 
 const router = express.Router();
+// Create
+router.post(
+  "/",
+  authMiddleware,
+  adminMiddleware,
+  upload.single("image"),
+  createEvent
+);
 
-// إنشاء حدث - فقط الـ admin يقدر يعملها
-router.post("/", authMiddleware, adminMiddleware, createEvent);
-
-// الحصول على قائمة الأحداث
+//Get
 router.get("/", getEvents);
 
-// الحصول على حدث باستخدام المعرف
+// Get by ID
 router.get("/:id", getEventById);
 
-// تحديث حدث - فقط الـ admin يقدر يعملها
+//Update
 router.put("/:id", authMiddleware, adminMiddleware, updateEvent);
 
-// حذف حدث - فقط الـ admin يقدر يعملها
+// Delete
 router.delete("/:id", authMiddleware, adminMiddleware, deleteEvent);
 
 export default router;
