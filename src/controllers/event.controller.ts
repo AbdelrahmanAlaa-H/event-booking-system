@@ -1,38 +1,39 @@
 import { Request, Response, NextFunction } from "express";
 import Event from "../models/Event";
 
-// دالة إضافة حدث (Create Event)
 import { AuthenticatedRequest } from "../middlewares/authMiddleware";
 
 export const createEvent = async (
   req: AuthenticatedRequest,
   res: Response,
   next: NextFunction
-) => {
-  const { title, description, date, location, category, tags } = req.body;
-
+): Promise<void> => {
   try {
+    const { title, description, date, location, category, tags } = req.body;
+
+    if (!req.user) {
+      res.status(401).json({ message: "User not authenticated" });
+      return;
+    }
+
     const newEvent = new Event({
       title,
       description,
       date,
       location,
-      category, // ID للفئة
-      tags, // Array of tag IDs
-      createdBy: req.user?.id,
+      category,
+      tags,
+      imageUrl: req.file?.path,
+      createdBy: req.user.id,
     });
 
     await newEvent.save();
-
-    res
-      .status(201)
-      .json({ message: "Event created successfully", event: newEvent });
+    res.status(201).json(newEvent);
   } catch (error) {
     next(error);
   }
 };
 
-// دالة الحصول على قائمة الأحداث (Get Events)
 export const getEvents = async (
   req: Request,
   res: Response,
@@ -46,7 +47,6 @@ export const getEvents = async (
   }
 };
 
-// دالة الحصول على تفاصيل حدث (Get Event by ID)
 export const getEventById = async (
   req: Request,
   res: Response,
@@ -65,7 +65,6 @@ export const getEventById = async (
   }
 };
 
-// دالة تحديث حدث (Update Event)
 export const updateEvent = async (
   req: Request,
   res: Response,
@@ -80,7 +79,6 @@ export const updateEvent = async (
       return;
     }
 
-    // تحديث الحقول
     event.title = title || event.title;
     event.description = description || event.description;
     event.date = date || event.date;
@@ -93,7 +91,6 @@ export const updateEvent = async (
   }
 };
 
-// دالة حذف حدث (Delete Event)
 export const deleteEvent = async (
   req: Request,
   res: Response,

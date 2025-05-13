@@ -6,6 +6,7 @@ export interface Event extends Document {
   description: string;
   date: Date;
   location: string;
+  imageUrl?: string;
   createdBy: mongoose.Schema.Types.ObjectId;
   category: mongoose.Schema.Types.ObjectId;
   tags: mongoose.Schema.Types.ObjectId[];
@@ -17,6 +18,7 @@ const eventSchema: Schema = new Schema(
     description: { type: String, required: true },
     date: { type: Date, required: true },
     location: { type: String, required: true },
+    imageUrl: { type: String }, // ✅ دعم رفع الصورة
     createdBy: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",

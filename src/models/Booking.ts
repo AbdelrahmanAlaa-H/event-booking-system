@@ -17,7 +17,7 @@ const bookingSchema = new Schema<IBooking>(
   }
 );
 
-// منع تكرار الحجز لنفس الحدث من نفس المستخدم
+// Create a unique index on user and event to prevent duplicate bookings
 bookingSchema.index({ user: 1, event: 1 }, { unique: true });
 
 const Booking = mongoose.model<IBooking>("Booking", bookingSchema);

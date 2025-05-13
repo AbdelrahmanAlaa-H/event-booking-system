@@ -6,9 +6,9 @@ import authRoutes from "./routes/auth.routes";
 import eventRoutes from "./routes/event.routes";
 import errorHandler from "./middlewares/errorHandler";
 import bookingRoutes from "./routes/booking.routes";
-import categoryRoutes from "./routes/category.routes"; // ✅
-import tagRoutes from "./routes/tag.routes"; // ✅
-
+import categoryRoutes from "./routes/category.routes";
+import tagRoutes from "./routes/tag.routes";
+import { setupSwagger } from "./config/swagger";
 dotenv.config();
 
 const app = express();
@@ -17,12 +17,16 @@ connectDB();
 
 app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+setupSwagger(app);
 
 app.use("/api/auth", authRoutes);
 app.use("/api/events", eventRoutes);
 app.use("/api/bookings", bookingRoutes);
-app.use("/api/categories", categoryRoutes); // ✅
-app.use("/api/tags", tagRoutes); // ✅
+app.use("/api/categories", categoryRoutes);
+app.use("/api/tags", tagRoutes);
+
 app.use(errorHandler);
 
 export default app;
