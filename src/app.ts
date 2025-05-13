@@ -8,7 +8,7 @@ import errorHandler from "./middlewares/errorHandler";
 import bookingRoutes from "./routes/booking.routes";
 import categoryRoutes from "./routes/category.routes";
 import tagRoutes from "./routes/tag.routes";
-
+import { setupSwagger } from "./config/swagger";
 dotenv.config();
 
 const app = express();
@@ -16,9 +16,10 @@ const app = express();
 connectDB();
 
 app.use(cors());
-
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+setupSwagger(app);
 
 app.use("/api/auth", authRoutes);
 app.use("/api/events", eventRoutes);
