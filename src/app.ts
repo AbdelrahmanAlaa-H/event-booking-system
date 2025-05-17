@@ -9,13 +9,22 @@ import bookingRoutes from "./routes/booking.routes";
 import categoryRoutes from "./routes/category.routes";
 import tagRoutes from "./routes/tag.routes";
 import { setupSwagger } from "./config/swagger";
+import "./models/Category";
+import "./models/Tag";
 dotenv.config();
 
 const app = express();
 
 connectDB();
 
-app.use(cors());
+// 👇 CORS setup: specify your frontend's URL
+app.use(
+  cors({
+    origin: "http://localhost:3000", // Change if your frontend runs elsewhere
+    credentials: true, // Only if you use cookies/auth headers
+  })
+);
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -28,5 +37,7 @@ app.use("/api/categories", categoryRoutes);
 app.use("/api/tags", tagRoutes);
 
 app.use(errorHandler);
+
+console.log("Connecting to MongoDB:", process.env.MONGO_URI);
 
 export default app;
