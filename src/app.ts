@@ -30,6 +30,10 @@ app.use(express.urlencoded({ extended: true }));
 
 setupSwagger(app);
 
+app.get("/", (req, res) => {
+  res.send("Event Booking System API is running!");
+});
+
 app.use("/api/auth", authRoutes);
 app.use("/api/events", eventRoutes);
 app.use("/api/bookings", bookingRoutes);
