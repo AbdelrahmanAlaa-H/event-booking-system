@@ -20,8 +20,11 @@ connectDB();
 // 👇 CORS setup: specify your frontend's URL
 app.use(
   cors({
-    origin: "http://localhost:3000", // Change if your frontend runs elsewhere
-    credentials: true, // Only if you use cookies/auth headers
+    origin: [
+      "http://localhost:3000",
+      "https://event-booking-system-frontend.vercel.app",
+    ],
+    credentials: true,
   })
 );
 
