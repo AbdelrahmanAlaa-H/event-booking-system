@@ -1,7 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import Tag from "../models/Tag";
 
-// إنشاء وسم
 export const createTag = async (
   req: Request,
   res: Response,

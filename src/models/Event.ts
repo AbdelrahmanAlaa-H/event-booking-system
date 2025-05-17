@@ -1,5 +1,6 @@
-// models/Event.ts
 import mongoose, { Schema, Document } from "mongoose";
+import Category from "./Category";
+import Tag from "./Tag";
 
 export interface Event extends Document {
   title: string;
@@ -10,6 +11,7 @@ export interface Event extends Document {
   createdBy: mongoose.Schema.Types.ObjectId;
   category: mongoose.Schema.Types.ObjectId;
   tags: mongoose.Schema.Types.ObjectId[];
+  price: number;
 }
 
 const eventSchema: Schema = new Schema(
@@ -18,7 +20,7 @@ const eventSchema: Schema = new Schema(
     description: { type: String, required: true },
     date: { type: Date, required: true },
     location: { type: String, required: true },
-    imageUrl: { type: String }, // ✅ دعم رفع الصورة
+    imageUrl: { type: String },
     createdBy: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
@@ -34,6 +36,7 @@ const eventSchema: Schema = new Schema(
         ref: "Tag",
       },
     ],
+    price: { type: Number, required: true }, // إضافة price هنا
   },
   {
     timestamps: true,
